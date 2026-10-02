@@ -8,7 +8,7 @@
     // UTM (chiến dịch quảng cáo)
     "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id", "utm_name", "utm_cid", "utm_reader", "utm_referrer", "utm_social", "utm_social_type",
     // Google
-    "gclid", "gclsrc", "dclid", "gbraid", "wbraid", "gad_source",
+    "gclid", "gclsrc", "dclid", "gbraid", "wbraid", "gad_source", "gad_campaignid", "srsltid",
     // Mạng khác
     "msclkid", "mc_cid", "mc_eid", "yclid", "_openstat", "igshid", "igsh", "ttclid", "twclid",
     "_hsenc", "_hsmi", "hsCtaTracking", "vero_id", "oly_enc_id", "oly_anon_id", "wickedid"

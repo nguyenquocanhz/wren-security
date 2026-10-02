@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  # Cách 1 (dễ nhất): vào tab Actions -> Release -> "Run workflow" -> gõ phiên bản.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Phiên bản mới (vd 1.3.2). Sẽ tự cập nhật manifest, tạo tag và phát hành.'
+        required: true
+  # Cách 2: tự đẩy tag dạng v1.3.2 (manifest phải trùng phiên bản đó).
+  push:
+    tags: ['v*.*.*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Kiểm tra extension
+        run: node scripts/validate.mjs
+
+      - name: Xác định phiên bản & tạo tag
+        env:
+          EVENT: ${{ github.event_name }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -e
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            V="$INPUT_VERSION"
+            echo "$V" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' || { echo "Phiên bản sai định dạng (cần x.y.z): $V"; exit 1; }
+            if git rev-parse "v$V" >/dev/null 2>&1; then echo "Tag v$V đã tồn tại."; exit 1; fi
+            node scripts/bump.mjs "$V"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add manifest.json
+            git commit -m "Release v$V" || echo "manifest đã đúng phiên bản, không cần commit"
+            git tag "v$V"
+            git push origin "HEAD:${REF_NAME}"
+            git push origin "v$V"
+          else
+            V="${REF_NAME#v}"
+            MV="$(node -e "process.stdout.write(require('./manifest.json').version)")"
+            if [ "$V" != "$MV" ]; then
+              echo "Tag v$V không khớp manifest version $MV. Hãy bump manifest trước (node scripts/bump.mjs $V)."; exit 1;
+            fi
+          fi
+          echo "V=$V" >> "$GITHUB_ENV"
+
+      - name: Đóng gói .zip
+        run: |
+          set -e
+          ZIP="wren-security-v${V}.zip"
+          zip -r "$ZIP" \
+            manifest.json README.md \
+            background.js shared content popup options warning cookies rules icons \
+            -x "*/.DS_Store"
+          echo "ZIP=$ZIP" >> "$GITHUB_ENV"
+          echo "Đã tạo $ZIP"
+
+      - name: Tạo GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          gh release create "v${V}" "${ZIP}" \
+            --title "Wren Security v${V}" \
+            --generate-notes

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Wren Security",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Chặn theo dõi, dọn link bẩn (fbclid, utm…), cảnh báo link lạ, chặn web nguy hiểm, sao lưu cấu hình & cookie, ẩn 'Đã xem' trên Messenger.",
   "icons": {
     "16": "icons/icon16.png",

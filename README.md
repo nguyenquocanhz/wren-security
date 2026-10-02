@@ -1,5 +1,7 @@
 # Wren Security
 
+[![CI](https://github.com/nguyenquocanhz/wren-security/actions/workflows/ci.yml/badge.svg)](https://github.com/nguyenquocanhz/wren-security/actions/workflows/ci.yml)
+
 Tiện ích trình duyệt (Chrome/Edge, Manifest V3) giúp **chặn theo dõi** và dọn dẹp trải nghiệm Facebook/Messenger. Lấy cảm hứng và kế thừa ý tưởng từ J2TEAM Security, xây lại sạch sẽ để bạn tự phát triển thêm.
 
 ## Tính năng
@@ -102,6 +104,33 @@ Mở bằng nút **⚙️ Tùy chọn & sổ cái** trong popup, hoặc `chrome:
 - Chặn “Theo dõi hoạt động ngoài Facebook” (Off-Facebook activity) bằng danh sách domain.
 - Mã hoá file cookie bằng mật khẩu khi xuất (tăng an toàn khi lưu trữ).
 - Cảnh báo link rút gọn (bit.ly, t.co…) — mở rộng để xem đích thật trước khi vào.
+
+## CI/CD & Phát hành
+
+Dự án có sẵn 2 quy trình tự động (GitHub Actions):
+
+- **CI** (`.github/workflows/ci.yml`): mỗi lần push/PR vào `main` sẽ chạy `scripts/validate.mjs` — kiểm tra manifest, mọi file JSON và cú pháp mọi file JS. Hỏng là báo đỏ ngay.
+- **Release** (`.github/workflows/release.yml`): đóng gói `wren-security-vX.Y.Z.zip` và tạo **GitHub Release** kèm tag.
+
+### Ra một bản mới — Cách 1 (dễ nhất, không cần gõ lệnh)
+1. Vào repo trên GitHub → tab **Actions** → chọn **Release** → **Run workflow**.
+2. Gõ phiên bản mới (vd `1.3.2`) → **Run workflow**.
+3. Máy tự: cập nhật `manifest.json`, commit, tạo tag `v1.3.2`, đóng gói `.zip` và tạo Release. Vào tab **Releases** để tải file `.zip`.
+
+### Ra một bản mới — Cách 2 (tự làm ở máy)
+```bash
+node scripts/bump.mjs 1.3.2
+git -C . add -A && git commit -m "Release v1.3.2" && git push
+git tag v1.3.2 && git push origin v1.3.2
+```
+Tag `v1.3.2` được đẩy lên sẽ tự kích hoạt quy trình Release (manifest phải trùng đúng `1.3.2`).
+
+### Kiểm tra tại máy trước khi push
+```bash
+node scripts/validate.mjs
+```
+
+> Quy ước phiên bản: dùng `x.y.z` (vd tăng `z` khi sửa nhỏ, `y` khi thêm tính năng). Tag luôn có tiền tố `v` (vd `v1.3.2`), còn trong `manifest.json` thì không có `v`.
 
 ## Giấy phép
 

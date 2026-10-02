@@ -128,7 +128,17 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 /* ---------- vòng đời ---------- */
 chrome.runtime.onInstalled.addListener(async () => {
   const cur = await getSettings();
-  await chrome.storage.sync.set(Object.assign({}, DEFAULTS, cur)); // bù key thiếu, giữ chỉnh sửa của người dùng
+  const extra = await new Promise((r) => chrome.storage.sync.get({ knownDefaults: [] }, r));
+  // Gộp các tham số mặc định MỚI (vừa thêm vào defaults.js) vào danh sách của người dùng:
+  // không xoá gì người dùng tự thêm, và không thêm lại cái người dùng đã cố tình bỏ.
+  const stored = Array.isArray(cur.params) ? cur.params.slice() : DEFAULTS.params.slice();
+  const known = Array.isArray(extra.knownDefaults) ? extra.knownDefaults : [];
+  const merged = stored.slice();
+  for (const p of DEFAULTS.params) if (!known.includes(p) && !merged.includes(p)) merged.push(p);
+  await chrome.storage.sync.set(Object.assign({}, DEFAULTS, cur, {
+    params: merged,
+    knownDefaults: DEFAULTS.params.slice()
+  }));
   applyAll();
 });
 if (chrome.runtime.onStartup) chrome.runtime.onStartup.addListener(applyAll);
