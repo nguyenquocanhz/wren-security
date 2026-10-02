@@ -1,0 +1,4 @@
+[
+  { "id": 1, "priority": 1, "action": { "type": "block" }, "condition": { "urlFilter": "||facebook.com/ajax/messaging/typ.php", "resourceTypes": ["xmlhttprequest", "other"] } },
+  { "id": 2, "priority": 1, "action": { "type": "block" }, "condition": { "urlFilter": "||messenger.com/ajax/messaging/typ.php", "resourceTypes": ["xmlhttprequest", "other"] } }
+]

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cảnh báo — Wren Security</title>
+  <link rel="stylesheet" href="warning.css">
+</head>
+<body>
+  <main class="box">
+    <div class="icon">⚠️</div>
+    <h1>Trang web nguy hiểm bị chặn</h1>
+    <p class="lead">Wren Security chặn trang này vì nó nằm trong <b>sổ cái web nguy hiểm</b> của bạn. Trang có thể lừa đảo, chứa mã độc hoặc đánh cắp thông tin.</p>
+
+    <div class="target">
+      <div class="target-host" id="host">—</div>
+      <div class="target-url" id="url"></div>
+    </div>
+
+    <div class="disclaimer">
+      <label>
+        <input type="checkbox" id="agree">
+        <span>Tôi hiểu đây có thể là trang nguy hiểm và <b>tự chịu hoàn toàn trách nhiệm</b> nếu vẫn truy cập.</span>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button id="back" class="btn safe">← Quay lại nơi an toàn</button>
+      <button id="proceed" class="btn danger" disabled>Vẫn truy cập</button>
+    </div>
+
+    <p class="note">Nếu bạn bấm “Vẫn truy cập”, Wren sẽ ngừng chặn domain này cho tới khi bạn đóng trình duyệt. Bạn có thể quản lý sổ cái trong trang Tùy chọn của tiện ích.</p>
+  </main>
+
+  <script src="warning.js"></script>
+</body>
+</html>

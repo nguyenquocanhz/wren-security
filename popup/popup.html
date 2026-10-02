@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <img src="../icons/icon48.png" alt="" width="28" height="28">
+    <div>
+      <h1>Wren Security</h1>
+      <p id="count">Đã dọn 0 liên kết</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="group">
+      <div class="row">
+        <div class="txt"><b>Dọn link theo dõi</b><span>Xoá fbclid, utm… khỏi liên kết</span></div>
+        <label class="sw"><input type="checkbox" id="cleanParams"><span></span></label>
+      </div>
+      <div class="row">
+        <div class="txt"><b>Bỏ trang chuyển hướng</b><span>Vào thẳng link thật, bỏ qua l.facebook.com</span></div>
+        <label class="sw"><input type="checkbox" id="unwrap"><span></span></label>
+      </div>
+      <div class="row">
+        <div class="txt"><b>Chặn trình theo dõi Facebook</b><span>Chặn pixel theo dõi trên các web khác</span></div>
+        <label class="sw"><input type="checkbox" id="blockTrackers"><span></span></label>
+      </div>
+    </section>
+
+    <h2>An toàn duyệt web</h2>
+    <section class="group">
+      <div class="row">
+        <div class="txt"><b>Cảnh báo link lạ</b><span>Hỏi lại khi bấm link rời khỏi Facebook</span></div>
+        <label class="sw"><input type="checkbox" id="warnExternal"><span></span></label>
+      </div>
+      <div class="row">
+        <div class="txt"><b>Chặn web nguy hiểm</b><span>Chặn domain trong “sổ cái” (cần cấp thêm quyền)</span></div>
+        <label class="sw"><input type="checkbox" id="blockDanger"><span></span></label>
+      </div>
+    </section>
+
+    <h2>Messenger (thử nghiệm)</h2>
+    <section class="group">
+      <div class="row">
+        <div class="txt"><b>Ẩn “Đã xem”</b><span>Không gửi báo đã đọc tin nhắn</span></div>
+        <label class="sw"><input type="checkbox" id="seen"><span></span></label>
+      </div>
+      <div class="row">
+        <div class="txt"><b>Ẩn “Đang soạn tin…”</b><span>Không báo cho người kia biết bạn đang gõ</span></div>
+        <label class="sw"><input type="checkbox" id="typing"><span></span></label>
+      </div>
+    </section>
+
+    <h2>Nâng cao</h2>
+    <section class="group">
+      <div class="row">
+        <div class="txt"><b>Dọn link trên MỌI trang web</b><span>Cần cấp thêm quyền truy cập tất cả trang</span></div>
+        <label class="sw"><input type="checkbox" id="cleanAll"><span></span></label>
+      </div>
+    </section>
+
+    <div class="btnrow">
+      <button id="options" class="reset">⚙️ Tùy chọn &amp; sổ cái</button>
+    </div>
+    <div class="btnrow">
+      <button id="cookies" class="reset">🍪 Cookie trang này</button>
+      <button id="reset" class="reset">Đặt lại bộ đếm</button>
+    </div>
+    <p class="note">Tính năng Messenger là thử nghiệm và có thể ngừng chạy khi Facebook thay đổi. Tiện ích không đọc nội dung tin nhắn của bạn.</p>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

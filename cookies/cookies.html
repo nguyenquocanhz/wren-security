@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookie — Wren Security</title>
+  <link rel="stylesheet" href="cookies.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="../icons/icon48.png" alt="" width="36" height="36">
+      <div>
+        <h1>Quản lý Cookie theo site</h1>
+        <p>Xuất phiên đăng nhập của một trang ra file và nhập lại.</p>
+      </div>
+    </header>
+
+    <div class="danger-banner">
+      ⚠️ <b>Cực kỳ nhạy cảm.</b> File cookie chứa <b>phiên đăng nhập</b> của bạn — ai có file này có thể vào thẳng tài khoản mà <b>không cần mật khẩu</b>. Tuyệt đối không chia sẻ, không tải lên mạng; nên xoá file sau khi dùng. Chỉ nhập cookie từ nguồn bạn tin tưởng.
+    </div>
+
+    <section class="card">
+      <h2>Chọn trang</h2>
+      <div class="domain-row">
+        <input id="domain" type="text" placeholder="vd: facebook.com" autocomplete="off" spellcheck="false">
+        <button id="load" class="btn" type="button">Tải cookie</button>
+      </div>
+      <p class="hint">Nhập tên miền (không cần http). Lần đầu với mỗi site, trình duyệt sẽ hỏi cấp quyền truy cập cookie của đúng site đó.</p>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>Cookie tìm thấy <span id="count" class="badge">0</span></h2>
+        <div class="actions">
+          <button id="export" class="btn" type="button" disabled>⬇️ Xuất ra file</button>
+        </div>
+      </div>
+      <div id="list" class="list"><span class="empty">Chưa tải. Bấm “Tải cookie”.</span></div>
+    </section>
+
+    <section class="card">
+      <h2>Nhập cookie từ file</h2>
+      <p class="hint">Chọn file <code>.json</code> đã xuất trước đó rồi bấm “Nhập”. Sau khi nhập, hãy tải lại trang web để đăng nhập có hiệu lực.</p>
+      <div class="domain-row">
+        <label class="btn ghost file">📄 Chọn file…<input id="file" type="file" accept="application/json,.json" hidden></label>
+        <span id="fileName" class="filename">Chưa chọn file</span>
+        <button id="import" class="btn" type="button" disabled>Nhập vào trình duyệt</button>
+      </div>
+    </section>
+
+    <p id="status" class="status"></p>
+  </div>
+
+  <script src="cookies.js"></script>
+</body>
+</html>

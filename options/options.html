@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tùy chọn — Wren Security</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="../icons/icon48.png" alt="" width="36" height="36">
+      <div>
+        <h1>Wren Security — Tùy chọn</h1>
+        <p>Tự quản lý tham số theo dõi, sổ cái web nguy hiểm và danh sách tin tưởng.</p>
+      </div>
+    </header>
+
+    <!-- 1) Tham số theo dõi -->
+    <section class="card">
+      <div class="card-head">
+        <h2>Tham số bị xoá <span id="count_params" class="badge">0</span></h2>
+        <div class="actions">
+          <button data-restore="params" class="btn ghost" type="button">Khôi phục mặc định</button>
+          <button data-clear="params" class="btn ghost danger" type="button">Xoá tất cả</button>
+        </div>
+      </div>
+      <p class="hint">Khi bật “Dọn link theo dõi”, các “từ khoá” này (vd <code>fbclid</code>, <code>utm_source</code>) sẽ bị bỏ khỏi liên kết — cả khi mở link lẫn ở tầng mạng.</p>
+      <div id="chips_params" class="chips" aria-live="polite"></div>
+      <form data-add="params" class="add">
+        <input type="text" placeholder="Thêm tham số (vd: spm_id, ref) — cách nhau bằng dấu phẩy" autocomplete="off" spellcheck="false">
+        <button class="btn" type="submit">Thêm</button>
+      </form>
+      <p data-err="params" class="err" hidden></p>
+    </section>
+
+    <!-- 2) Sổ cái web nguy hiểm -->
+    <section class="card danger-card">
+      <div class="card-head">
+        <h2>🛑 Sổ cái web nguy hiểm <span id="count_blocklist" class="badge red">0</span></h2>
+        <div class="actions">
+          <button data-example="blocklist" class="btn ghost" type="button">Thêm ví dụ để thử</button>
+          <button data-clear="blocklist" class="btn ghost danger" type="button">Xoá tất cả</button>
+        </div>
+      </div>
+      <p class="hint">Các domain ở đây sẽ bị <b>chặn</b> và chuyển sang trang cảnh báo (có nút “vẫn truy cập” kèm miễn trừ trách nhiệm). Chỉ nhập tên miền, vd <code>evil-site.com</code>, <code>sub.lua-dao.net</code>.</p>
+      <p class="warn" id="blockWarn" hidden>⚠️ Để chặn chạy được, hãy bật <b>“Chặn web nguy hiểm”</b> trong cửa sổ tiện ích và cấp quyền “truy cập mọi trang”.</p>
+      <div id="chips_blocklist" class="chips" aria-live="polite"></div>
+      <form data-add="blocklist" class="add">
+        <input type="text" placeholder="Thêm domain nguy hiểm — cách nhau bằng dấu phẩy" autocomplete="off" spellcheck="false">
+        <button class="btn" type="submit">Thêm</button>
+      </form>
+      <p data-err="blocklist" class="err" hidden></p>
+    </section>
+
+    <!-- 3) Domain tin tưởng -->
+    <section class="card">
+      <div class="card-head">
+        <h2>✅ Domain tin tưởng <span id="count_trusted" class="badge">0</span></h2>
+        <div class="actions">
+          <button data-clear="trusted" class="btn ghost danger" type="button">Xoá tất cả</button>
+        </div>
+      </div>
+      <p class="hint">Khi bật “Cảnh báo link lạ”, các domain ở đây sẽ <b>không</b> bị hỏi nữa (áp dụng cho cả tên miền con). Bạn cũng có thể thêm nhanh bằng ô “Luôn tin domain này” khi hộp cảnh báo hiện ra.</p>
+      <div id="chips_trusted" class="chips" aria-live="polite"></div>
+      <form data-add="trusted" class="add">
+        <input type="text" placeholder="Thêm domain tin tưởng (vd: vnexpress.net)" autocomplete="off" spellcheck="false">
+        <button class="btn" type="submit">Thêm</button>
+      </form>
+      <p data-err="trusted" class="err" hidden></p>
+    </section>
+
+    <!-- 4) Sao lưu & khôi phục -->
+    <section class="card">
+      <h2>💾 Sao lưu &amp; khôi phục</h2>
+      <p class="hint">Xuất toàn bộ cấu hình (tham số, sổ cái, domain tin tưởng và các công tắc) ra một file để sao lưu hoặc chuyển sang máy khác. Khi nhập, cấu hình hiện tại sẽ bị ghi đè.</p>
+      <div class="row-btns">
+        <button id="exportCfg" class="btn" type="button">⬇️ Xuất cấu hình</button>
+        <label class="btn ghost file">⬆️ Nhập cấu hình<input id="importCfg" type="file" accept="application/json,.json" hidden></label>
+        <button id="openCookies" class="btn ghost" type="button">🍪 Quản lý Cookie site</button>
+      </div>
+      <p data-err="cfg" class="err" hidden></p>
+    </section>
+
+    <!-- 5) Thử dọn link -->
+    <section class="card">
+      <h2>Thử dọn một liên kết</h2>
+      <p class="hint">Dán một liên kết để xem Wren sẽ dọn/cảnh báo thế nào (chỉ chạy tại chỗ, không gửi đi đâu).</p>
+      <input id="testInput" type="text" class="full" placeholder="https://vd.com/bai-viet?fbclid=abc&utm_source=fb" autocomplete="off" spellcheck="false">
+      <div class="result">
+        <div class="result-row"><span class="lbl">Kết quả:</span> <code id="testOut">—</code></div>
+        <div id="testNote" class="note-small"></div>
+      </div>
+    </section>
+
+    <p class="foot">Thay đổi được lưu tự động và áp dụng ngay. <span id="saved" class="saved" hidden>Đã lưu ✓</span></p>
+  </div>
+
+  <script src="../shared/defaults.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

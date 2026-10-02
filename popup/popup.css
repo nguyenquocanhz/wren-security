@@ -1,0 +1,32 @@
+:root {
+  --bg: #ffffff; --fg: #111827; --muted: #6b7280; --line: #e5e7eb;
+  --card: #f9fafb; --brand: #4f46e5; --brand2: #4338ca;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f1115; --fg: #e5e7eb; --muted: #9ca3af; --line: #232733; --card: #161a22; }
+}
+* { box-sizing: border-box; }
+body { width: 320px; margin: 0; font: 14px/1.4 "Segoe UI", system-ui, Arial, sans-serif; background: var(--bg); color: var(--fg); }
+header { display: flex; gap: 10px; align-items: center; padding: 14px 16px; background: linear-gradient(135deg, var(--brand), var(--brand2)); color: #fff; }
+header img { border-radius: 7px; display: block; }
+header h1 { font-size: 15px; margin: 0; }
+header p { margin: 2px 0 0; font-size: 12px; opacity: .9; }
+main { padding: 12px 14px 16px; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 2px 6px; }
+.group { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.row { display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: none; }
+.txt { flex: 1; min-width: 0; }
+.txt b { display: block; font-weight: 600; font-size: 13.5px; }
+.txt span { display: block; color: var(--muted); font-size: 12px; margin-top: 1px; }
+.sw { position: relative; width: 40px; height: 23px; flex: none; }
+.sw input { opacity: 0; width: 0; height: 0; position: absolute; }
+.sw span { position: absolute; inset: 0; background: #cbd5e1; border-radius: 999px; transition: .2s; cursor: pointer; }
+.sw span::before { content: ""; position: absolute; width: 19px; height: 19px; left: 2px; top: 2px; background: #fff; border-radius: 50%; transition: .2s; box-shadow: 0 1px 2px rgba(0,0,0,.3); }
+.sw input:checked + span { background: var(--brand); }
+.sw input:checked + span::before { transform: translateX(17px); }
+.btnrow { display: flex; gap: 8px; margin-top: 14px; }
+.reset { flex: 1; padding: 9px; border: 1px solid var(--line); background: var(--card); color: var(--fg); border-radius: 10px; cursor: pointer; font-size: 13px; }
+.reset:hover { border-color: var(--brand); }
+.note { color: var(--muted); font-size: 11px; margin: 10px 2px 0; line-height: 1.5; }
+@media (prefers-color-scheme: dark) { .sw span { background: #374151; } }
